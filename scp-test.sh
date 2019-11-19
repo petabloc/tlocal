@@ -8,10 +8,12 @@
  
 USERLIST="alice bob charlie"
 
+LOG=scp-test.log
+exec 1 > $LOG 2 > &1
 for USER in $USERLIST
 do
   echo "attempting $USER"
-  FILENAME=""$USER".txt"
+  FILENAME="$USER.txt"
   echo "This is a test for $USER" > $FILENAME
   scp -p 2232 $FILENAME brien@45.79.6.53:/tlm-admins/brien/
   CMD="echo 'happy little text' >> /tlm-admins/brien/result.txt"
