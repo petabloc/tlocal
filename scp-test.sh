@@ -9,7 +9,7 @@
 USERLIST="alice bob charlie"
 
 LOG=scp-test.log
-exec 1 > $LOG 2 > &1
+exec 1>$LOG 2>&1
 for USER in $USERLIST
 do
   echo "attempting $USER"
