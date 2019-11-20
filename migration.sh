@@ -1,16 +1,29 @@
-!/bin/bash
+#!/bin/bash
+
+source ./includes
 
 # For 1st phase of automated migration of wordpress sites for targetlocal job
 
-USERLIST="floodand eminneapolis" 
+if [ -z "$1" ]; then
+  USERLIST="floodand eminneapolis"
+else
+  USERLIST=$1
+fi
 
 LOG=migration.log
 exec 1>$LOG 2>&1
 
-for USER in $USERLIST
-do
-  /scripts/pkgacct $USER
-  FILENAME="cpmove-$USER.tar.gz"
-  scp -P 2232 "/home3/$FILENAME" brien@45.79.6.53:/tlm-admins/brien/
-  echo "$USER archive copied to new server"
+#Prepare
+mkdir -p $EXPORTS
+
+for USER in $USERLIST; do
+  /scripts/pkgacct --skiplogs --skipbwdata $USER $EXPORTS
+  trapError
+  echo $USER >> /path/to/myListOfSuccessfullExports
 done
+
+
+# Copy everything to the remote
+scp -P 2232 $EXPORTS/*.gz $DEST
+trapError
+

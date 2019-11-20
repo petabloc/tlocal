@@ -1,0 +1,16 @@
+EXPORTS="/home3/exports"
+DEST_HOST="brien@45.79.6.53:"
+DEST_DIR="/tlm-admins/brien/"
+
+
+# Expects in a loop with $USER set
+trapError () {
+  RET_VAL=$?
+
+  if [ $RET_VAL -ne 0 ];then
+    echo "Encountered an error"
+    echo "$USER failed >> /path/to/myListOfFailedExports"
+    unset $RET_VAL
+    exit 1
+  fi
+}
