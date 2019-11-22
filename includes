@@ -1,6 +1,6 @@
 EXPORTS="/home3/exports"
 DEST_HOST="brien@45.79.6.53:"
-DEST_DIR="/tlm-admins/brien/"
+DEST_DIR="/mnt/httpd2_backups/imports"
 
 
 # Expects in a loop with $USER set
@@ -9,7 +9,7 @@ trapError () {
 
   if [ $RET_VAL -ne 0 ];then
     echo "Encountered an error"
-    echo "$USER failed >> /path/to/myListOfFailedExports"
+    echo "$USER failed" >> migration-failure.log
     unset $RET_VAL
     exit 1
   fi
