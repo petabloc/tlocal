@@ -19,11 +19,8 @@ mkdir -p $EXPORTS
 for USER in $USERLIST; do
   /scripts/pkgacct --skiplogs --skipbwdata $USER $EXPORTS
   trapError
-  echo $USER >> /path/to/myListOfSuccessfullExports
+  echo $USER >> migration-success.log
 done
-
-
 # Copy everything to the remote
-scp -P 2232 $EXPORTS/*.gz $DEST
+scp -P 2232 $EXPORTS/*.gz $DEST_HOST$DEST_DIR
 trapError
-
